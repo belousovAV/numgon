@@ -1,7 +1,7 @@
 // Цифроугольники — главный файл
 // Шаг 1: пустое поле 4×4 + палитра всех фигурок
 
-export const VERSION = '0.2.1';
+export const VERSION = '0.2.2';
 
 const BOARD_SIZE = 4;
 const LEVELS = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024];
@@ -57,9 +57,15 @@ function dotsAt(vertices, radius) {
 }
 
 // Радиус точки: чем больше углов — тем меньше точка, чтобы они не сливались.
+// Учитываем zoom браузера: при увеличении масштаба devicePixelRatio растёт,
+// и мы уменьшаем минимальный радиус, чтобы точки у 1024-угольника не слипались.
 function dotRadiusFor(sides, polygonR) {
   const spacing = (2 * Math.PI * polygonR) / sides;
-  return Math.max(0.4, Math.min(3, spacing / 2));
+  const baselineDPR = 2;
+  const dpr = window.devicePixelRatio || 1;
+  const zoomCompensation = Math.max(1, dpr / baselineDPR);
+  const minR = 0.4 / zoomCompensation;
+  return Math.max(minR, Math.min(3, spacing / 2));
 }
 
 // SVG для одной фигурки заданного значения
@@ -119,6 +125,14 @@ function renderPalette() {
 
 renderBoard();
 renderPalette();
+
+// При zoom браузер выстреливает resize — перерисовываем палитру,
+// чтобы пересчитать размер точек под новый devicePixelRatio.
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(renderPalette, 100);
+});
 
 // Версия в углу страницы — чтобы видеть какой билд открыт
 const versionEl = document.createElement('div');
