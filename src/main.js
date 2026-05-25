@@ -1,12 +1,12 @@
 // Цифроугольники — главный файл
 // Шаг 1: пустое поле 4×4 + палитра всех фигурок
 
-export const VERSION = '0.2.2';
+export const VERSION = '0.2.3';
 
 const BOARD_SIZE = 4;
-const LEVELS = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024];
+const LEVELS = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048];
 
-// Цвета по схеме Макса.
+// Цвета по схеме Макса. 2048 — радужный градиент (определение в tileSvg).
 const COLORS = {
   2:    '#FF8C00', // оранжевый
   4:    '#43A047', // зелёный
@@ -18,6 +18,7 @@ const COLORS = {
   256:  '#7C4DFF', // фиолетовый
   512:  '#FF5252', // ярко-красный
   1024: '#FFD700', // золото
+  2048: 'url(#rainbow)', // радуга
 };
 
 function colorFor(value) {
@@ -68,11 +69,23 @@ function dotRadiusFor(sides, polygonR) {
   return Math.max(minR, Math.min(3, spacing / 2));
 }
 
+// Радужный градиент для 2048 (победная фигурка)
+const RAINBOW_DEF = `<defs>
+  <linearGradient id="rainbow" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%"   stop-color="#FF5E7E"/>
+    <stop offset="25%"  stop-color="#FFB84D"/>
+    <stop offset="50%"  stop-color="#4DFFB8"/>
+    <stop offset="75%"  stop-color="#4D9FFF"/>
+    <stop offset="100%" stop-color="#B84DFF"/>
+  </linearGradient>
+</defs>`;
+
 // SVG для одной фигурки заданного значения
 function tileSvg(value) {
   const color = colorFor(value);
   const sides = sidesFor(value);
   const stroke = 'stroke="#fff" stroke-width="1.2" stroke-linejoin="miter"';
+  const defs = value === 2048 ? RAINBOW_DEF : '';
 
   // Прямоугольник (число 2) — особый случай, у него 4 угла
   if (value === 2) {
@@ -80,7 +93,7 @@ function tileSvg(value) {
       { x: 10, y: 38 }, { x: 90, y: 38 },
       { x: 90, y: 62 }, { x: 10, y: 62 },
     ];
-    return `<svg viewBox="0 0 100 100">
+    return `<svg viewBox="0 0 100 100">${defs}
       <rect x="10" y="38" width="80" height="24" rx="0" fill="${color}" ${stroke}/>
       ${dotsAt(rectCorners, 2.5)}
     </svg>`;
@@ -89,7 +102,7 @@ function tileSvg(value) {
   const polygonR = 46;
   const verts = polygonVertices(sides, 50, 50, polygonR);
   const dotR = dotRadiusFor(sides, polygonR);
-  return `<svg viewBox="0 0 100 100">
+  return `<svg viewBox="0 0 100 100">${defs}
     <polygon points="${polygonPointsStr(verts)}" fill="${color}" ${stroke}/>
     ${dotsAt(verts, dotR)}
   </svg>`;
