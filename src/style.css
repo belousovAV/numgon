@@ -1,0 +1,85 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: #1a1d2e;
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px;
+  gap: 20px;
+}
+
+h1 {
+  font-size: 36px;
+  background: linear-gradient(90deg, #ff5e7e, #ffb84d, #4dffb8, #4d9fff, #b84dff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+h2 {
+  font-size: 20px;
+  opacity: 0.7;
+  margin-top: 12px;
+}
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(4, 90px);
+  grid-template-rows: repeat(4, 90px);
+  gap: 10px;
+  padding: 12px;
+  background: #2a2e44;
+  border-radius: 14px;
+}
+
+.cell {
+  background: #3a3f5a;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#palette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  max-width: 720px;
+}
+
+.tile {
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.tile svg {
+  width: 100%;
+  height: 100%;
+}
+
+.tile .label {
+  position: absolute;
+  font-weight: 700;
+  font-size: 26px;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  pointer-events: none;
+}
+
+.version {
+  position: fixed;
+  bottom: 8px;
+  right: 10px;
+  font-size: 12px;
+  color: #888;
+  font-family: ui-monospace, monospace;
+}
