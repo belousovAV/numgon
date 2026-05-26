@@ -20,30 +20,6 @@ h1 {
   color: transparent;
 }
 
-h2 {
-  font-size: 20px;
-  opacity: 0.7;
-  margin-top: 12px;
-}
-
-#board {
-  display: grid;
-  grid-template-columns: repeat(4, 90px);
-  grid-template-rows: repeat(4, 90px);
-  gap: 10px;
-  padding: 12px;
-  background: #2a2e44;
-  border-radius: 14px;
-}
-
-.cell {
-  background: #3a3f5a;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 #palette {
   display: flex;
   flex-wrap: wrap;

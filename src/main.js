@@ -1,9 +1,8 @@
 // Цифроугольники — главный файл
-// Шаг 1: пустое поле 4×4 + палитра всех фигурок
+// Шаг 1: палитра всех фигурок
 
-export const VERSION = '0.2.6';
+export const VERSION = '0.2.7';
 
-const BOARD_SIZE = 4;
 const LEVELS = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024];
 
 // Цвета по схеме Макса.
@@ -103,18 +102,7 @@ function tileElement(value) {
   return el;
 }
 
-// Пустое игровое поле 4×4
-function renderBoard() {
-  const board = document.getElementById('board');
-  board.innerHTML = '';
-  for (let i = 0; i < BOARD_SIZE * BOARD_SIZE; i++) {
-    const cell = document.createElement('div');
-    cell.className = 'cell';
-    board.appendChild(cell);
-  }
-}
-
-// Палитра — все фигурки от 2 до 2048
+// Палитра — все фигурки от 2 до 1024
 function renderPalette() {
   const palette = document.getElementById('palette');
   palette.innerHTML = '';
@@ -123,7 +111,6 @@ function renderPalette() {
   }
 }
 
-renderBoard();
 renderPalette();
 
 // При zoom браузер выстреливает resize — перерисовываем палитру,
