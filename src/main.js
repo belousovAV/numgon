@@ -1,7 +1,7 @@
 // Цифроугольники — главный файл
 // Шаг 1: пустое поле 4×4 + палитра всех фигурок
 
-export const VERSION = '0.2.5';
+export const VERSION = '0.2.6';
 
 const BOARD_SIZE = 4;
 const LEVELS = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024];
@@ -74,15 +74,15 @@ function tileSvg(value) {
   const sides = sidesFor(value);
   const stroke = 'stroke="#fff" stroke-width="1.2" stroke-linejoin="miter"';
 
-  // Прямоугольник (число 2) — особый случай, у него 4 угла
+  // Отрезок (число 2) — палочка с двумя концами-точками
   if (value === 2) {
-    const rectCorners = [
-      { x: 10, y: 38 }, { x: 90, y: 38 },
-      { x: 90, y: 62 }, { x: 10, y: 62 },
+    const ends = [
+      { x: 12, y: 50 },
+      { x: 88, y: 50 },
     ];
     return `<svg viewBox="0 0 100 100">
-      <rect x="10" y="38" width="80" height="24" rx="0" fill="${color}" ${stroke}/>
-      ${dotsAt(rectCorners, 2.5)}
+      <line x1="12" y1="50" x2="88" y2="50" stroke="${color}" stroke-width="8" stroke-linecap="round"/>
+      ${dotsAt(ends, 2.5)}
     </svg>`;
   }
 
